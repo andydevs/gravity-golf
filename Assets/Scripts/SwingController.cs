@@ -18,6 +18,14 @@ public class SwingController : MonoBehaviour
         rigidbody2D_.simulated = false;
     }
 
+    void Update()
+    {
+        if (rigidbody2D_.simulated)
+        {
+            Debug.Log("Speed: " + rigidbody2D_.velocity.magnitude);
+        }
+    }
+
     public void OnSwing()
     {
         // Get mouse poisition
