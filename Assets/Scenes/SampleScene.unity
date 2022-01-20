@@ -338,7 +338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f18f59e242a7c4aa96c1661885292b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strokeSpeed: 20
+  strokeInitialSpeed: 20
+  strokeEndSpeed: 1
 --- !u!114 &825244632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +384,7 @@ GameObject:
   - component: {fileID: 1010873427}
   - component: {fileID: 1010873428}
   - component: {fileID: 1010873426}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Planet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

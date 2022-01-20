@@ -6,7 +6,7 @@
             "id": "84deae52-f263-4c4b-8054-3cc7154b6d77",
             "actions": [
                 {
-                    "name": "Swing",
+                    "name": "MouseClick",
                     "type": "Button",
                     "id": "4bb6f75f-a3f8-483a-abd0-2f53ed781b69",
                     "expectedControlType": "Button",
@@ -22,7 +22,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Swing",
+                    "action": "MouseClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
