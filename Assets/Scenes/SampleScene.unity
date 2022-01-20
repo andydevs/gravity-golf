@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 825244627}
   - component: {fileID: 825244630}
   - component: {fileID: 825244629}
+  - component: {fileID: 825244632}
   - component: {fileID: 825244631}
   m_Layer: 0
   m_Name: Goffbol
@@ -282,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825244626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.467, y: 10.102, z: 0}
+  m_LocalPosition: {x: -0.02, y: 4.36, z: 0}
   m_LocalScale: {x: 0.11249999, y: 0.11249999, z: 0.11249999}
   m_Children: []
   m_Father: {fileID: 0}
@@ -337,6 +338,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f18f59e242a7c4aa96c1661885292b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &825244632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825244626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 7d8b81d52cfeaed4c8c7d89990c11612,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1010873423
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,33 @@
+{
+    "name": "Golf Controls",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "84deae52-f263-4c4b-8054-3cc7154b6d77",
+            "actions": [
+                {
+                    "name": "Swing",
+                    "type": "Button",
+                    "id": "4bb6f75f-a3f8-483a-abd0-2f53ed781b69",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0412e903-bf9f-4537-ad69-42d46936e764",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
