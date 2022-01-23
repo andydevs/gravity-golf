@@ -283,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825244626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 4.36, z: 0}
+  m_LocalPosition: {x: -0.13, y: 4.36, z: 0}
   m_LocalScale: {x: 0.11249999, y: 0.11249999, z: 0.11249999}
   m_Children: []
   m_Father: {fileID: 0}
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strokeInitialSpeed: 20
-  strokeEndSpeed: 1
+  strokeEndSpeed: 1.21
 --- !u!114 &825244632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +383,7 @@ GameObject:
   - component: {fileID: 1010873424}
   - component: {fileID: 1010873427}
   - component: {fileID: 1010873428}
+  - component: {fileID: 1010873429}
   - component: {fileID: 1010873426}
   m_Layer: 8
   m_Name: Planet
@@ -450,7 +451,7 @@ Transform:
   m_GameObject: {fileID: 1010873423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -467,7 +468,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c586f1b13e5b8469ae2ff09e8474a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 1
 --- !u!58 &1010873427
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -505,6 +505,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1010873429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010873423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e84ed05a413c8f45bec79dc4eaeae90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 1
 --- !u!1 &1441155936
 GameObject:
   m_ObjectHideFlags: 0

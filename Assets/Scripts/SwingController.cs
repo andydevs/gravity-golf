@@ -28,10 +28,10 @@ public class SwingController : MonoBehaviour
     void Start()
     {
         playerInput_ = GetComponent<PlayerInput>();
-        collider2D_ = GetComponent<Collider2D>();
+        collider2D_  = GetComponent<Collider2D>();
         rigidbody2D_ = GetComponent<Rigidbody2D>();
+        planetMask   = LayerMask.GetMask("Planet");
         rigidbody2D_.simulated = false;
-        planetMask = LayerMask.GetMask("Planet");
     }
 
     // TODO: Update this control to click and drag
