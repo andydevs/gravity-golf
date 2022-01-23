@@ -3,80 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerInput))]
 public class SwingController : MonoBehaviour
 {
-    // Event delegates
-    public delegate void StrokeEvent();
-    public static StrokeEvent OnStroke;
+    private PlayerInput input;
+    private InputAction mouseState;
+    private Vector2 downEvent;
+    private Vector2 mousePos;
+    private Vector2 upDeltaEvent;
+    private bool pressed;
 
-    // Public variables
-    public float strokeInitialSpeed = 1.0f;
-    public float strokeEndSpeed = 0.05f;
-
-    // Components
-    private Rigidbody2D rigidbody2D_;
-    private Collider2D collider2D_;
-    private PlayerInput playerInput_;
-
-    // Helper variables
-    private int planetMask;
-
-    // Public properties
-    public bool IsInStroke { get { return rigidbody2D_.simulated; } }
-
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        playerInput_ = GetComponent<PlayerInput>();
-        collider2D_  = GetComponent<Collider2D>();
-        rigidbody2D_ = GetComponent<Rigidbody2D>();
-        planetMask   = LayerMask.GetMask("Planet");
-        rigidbody2D_.simulated = false;
+        input = GetComponent<PlayerInput>();
+        downEvent = Vector2.zero;
+        pressed = false;
+        mouseState = input.actions.FindAction("MouseButton", true);
+        mouseState.started += OnMouseButtonStarted;
+        mouseState.canceled += OnMouseButtonCancelled;
     }
 
-    // TODO: Update this control to click and drag
-    public void OnMouseClick()
+    private void Update()
     {
-        // Get mouse poisition
-        Vector2 screenSpaceMouse = Mouse.current.position.ReadValue();
-        Vector2 worldSpaceMouse = Camera.main.ScreenToWorldPoint(screenSpaceMouse);
-
-        // Determine argument
-        Vector2 argument = worldSpaceMouse - (Vector2)transform.position;
-        argument.Normalize();
-
-        // Start Swing Control
-        StartCoroutine(SwingControl(argument));
-    }
-
-    IEnumerator SwingControl(Vector2 argument)
-    {
-        // Disable controls
-        playerInput_.enabled = false;
-
-        // Start simulation with given initial velocity
-        rigidbody2D_.velocity = strokeInitialSpeed * argument;
-        rigidbody2D_.simulated = true;
-
-        // Wait for ending stroke
-        bool endStroke = false;
-        while (!endStroke)
+        if (pressed)
         {
-            // Wait for next frame
-            yield return null;
-
-            // Update end stroke
-            endStroke = collider2D_.IsTouchingLayers(planetMask)         // Touching planet
-                    && rigidbody2D_.velocity.magnitude < strokeEndSpeed; // Slow Enough
+            mousePos = GetMousePos();
         }
+    }
 
-        // End simulation
-        rigidbody2D_.simulated = false;
+    private void OnMouseButtonStarted(InputAction.CallbackContext context)
+    {
+        pressed = true;
+        downEvent = GetMousePos();
+    }
 
-        // Enable controls
-        playerInput_.enabled = true;
+    private void OnMouseButtonCancelled(InputAction.CallbackContext context)
+    {
+        pressed = false;
+        upDeltaEvent = downEvent - GetMousePos();
+        upDeltaEvent.Normalize();
+        SendMessage("Swing", upDeltaEvent);
+    }
 
-        // Stroke event
-        OnStroke();
+    public void OnDrawGizmos()
+    {
+        if (pressed)
+        {
+            Gizmos.DrawLine(downEvent, mousePos);
+        }
+    }
+
+    private Vector2 GetMousePos()
+    {
+        Vector2 screenSpaceMouse = Mouse.current.position.ReadValue();
+        return Camera.main.ScreenToWorldPoint(screenSpaceMouse);
     }
 }
