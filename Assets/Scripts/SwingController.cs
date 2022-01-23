@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class SwingController : MonoBehaviour
 {
+    public float maxDistance = 30.0f;
+
     private PlayerInput input;
     private InputAction mouseState;
     private Vector2 downEvent;
     private Vector2 mousePos;
-    private Vector2 upDeltaEvent;
+    private Vector2 argument;
     private bool pressed;
 
     public void Start()
@@ -28,28 +30,30 @@ public class SwingController : MonoBehaviour
         if (pressed)
         {
             mousePos = GetMousePos();
+            argument = downEvent - GetMousePos();
+            argument = Mathf.Clamp(argument.magnitude, 0, maxDistance)/maxDistance * argument.normalized;
         }
     }
 
     private void OnMouseButtonStarted(InputAction.CallbackContext context)
     {
-        pressed = true;
         downEvent = GetMousePos();
+        pressed = true;
     }
 
     private void OnMouseButtonCancelled(InputAction.CallbackContext context)
     {
+        SendMessage("Swing", argument);
         pressed = false;
-        upDeltaEvent = downEvent - GetMousePos();
-        upDeltaEvent.Normalize();
-        SendMessage("Swing", upDeltaEvent);
     }
 
     public void OnDrawGizmos()
     {
         if (pressed)
         {
+            Gizmos.color = Color.HSVToRGB(argument.magnitude, 1, 1);
             Gizmos.DrawLine(downEvent, mousePos);
+            Gizmos.DrawLine(transform.position, transform.position + 3 * (Vector3)argument);
         }
     }
 

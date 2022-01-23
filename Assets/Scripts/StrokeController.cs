@@ -10,7 +10,8 @@ public class StrokeController : MonoBehaviour
     public static StrokeEvent OnStroke;
 
     // Public variables
-    public float strokeInitialSpeed = 1.0f;
+    public float strokeInitialSpeedMin = 0.5f;
+    public float strokeInitialSpeedMax = 1.0f;
     public float strokeEndSpeed = 0.05f;
 
     // Components
@@ -46,7 +47,7 @@ public class StrokeController : MonoBehaviour
         playerInput_.enabled = false;
 
         // Start simulation with given initial velocity
-        rigidbody2D_.velocity = strokeInitialSpeed * argument;
+        rigidbody2D_.velocity = Mathf.Lerp(strokeInitialSpeedMin, strokeInitialSpeedMax, argument.magnitude) * argument.normalized;
         rigidbody2D_.simulated = true;
 
         // Wait for ending stroke
