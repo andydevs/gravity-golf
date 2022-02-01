@@ -94,14 +94,12 @@ public class SwingTrajectoryPredictor : MonoBehaviour
                 goffbolSimPhysics.simulated = true;
 
                 // Simulation
-                Vector2 force;
                 for (int i = 0; i < numPoints; ++i)
                 {
                     points[i] = goffbolSimPhysics.transform.position;
                     foreach (Gravitator planetg in planetSimGs)
                     {
-                        force = planetg.ComputeGravityForce(goffbolSimPhysics);
-                        goffbolSimPhysics.AddForce(force);
+                        goffbolSimPhysics.AddForce(planetg.ComputeGravityForce(goffbolSimPhysics));
                     }
                     physicsScene.Simulate(Time.fixedDeltaTime);
                 }
