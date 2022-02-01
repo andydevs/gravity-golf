@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlanetPropertyController))]
 public class Gravitator : MonoBehaviour
 {
-    public const float G = 1000.0f;
+    public const float G = 2000.0f;
 
     private Rigidbody2D golfball;
     private CircleCollider2D surface;

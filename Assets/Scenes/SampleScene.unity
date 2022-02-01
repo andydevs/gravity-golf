@@ -543,7 +543,17 @@ PrefabInstance:
     - target: {fileID: 8859127850552339709, guid: dbb2e1e775158dc4584af383b6757eb1,
         type: 3}
       propertyPath: strokeInitialSpeedMax
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859127850552339709, guid: dbb2e1e775158dc4584af383b6757eb1,
+        type: 3}
+      propertyPath: strokeInitialSpeedMin
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859127850552339709, guid: dbb2e1e775158dc4584af383b6757eb1,
+        type: 3}
+      propertyPath: strokeEndSpeed
+      value: 2.42
       objectReference: {fileID: 0}
     - target: {fileID: 8859127850552339710, guid: dbb2e1e775158dc4584af383b6757eb1,
         type: 3}
