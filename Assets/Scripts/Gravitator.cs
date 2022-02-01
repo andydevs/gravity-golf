@@ -24,9 +24,19 @@ public class Gravitator : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Gravity.... it idk
-        Vector2 relative = transform.position + (Vector3)surface.offset - golfball.transform.position;
-        float gravity = G * planet.mass * golfball.mass / relative.sqrMagnitude;
-        golfball.AddForce(gravity * relative.normalized);
+        // Gravity... it idk
+        if (golfball) golfball.AddForce(ComputeGravityForce(golfball));
+    }
+
+    public void SetGolfbol(Rigidbody2D newGolfBol)
+    {
+        golfball = newGolfBol;
+    }
+
+    public Vector2 ComputeGravityForce(Rigidbody2D rigidbody)
+    {
+        Vector2 relative = transform.position + (Vector3)surface.offset - rigidbody.transform.position;
+        float gravity = G * planet.mass * rigidbody.mass / relative.sqrMagnitude;
+        return gravity * relative.normalized;
     }
 }

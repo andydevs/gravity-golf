@@ -15,6 +15,10 @@ public class SwingController : MonoBehaviour
     private Vector2 argument;
     private bool pressed;
 
+    // Public Properties
+    public bool InSwingControl { get { return pressed; } }
+    public Vector2 SwingArgument { get { return argument; } }
+
     public void Start()
     {
         input = GetComponent<PlayerInput>();
@@ -37,8 +41,8 @@ public class SwingController : MonoBehaviour
 
     private void OnMouseButtonStarted(InputAction.CallbackContext context)
     {
-        downEvent = GetMousePos();
         pressed = true;
+        downEvent = GetMousePos();
     }
 
     private void OnMouseButtonCancelled(InputAction.CallbackContext context)

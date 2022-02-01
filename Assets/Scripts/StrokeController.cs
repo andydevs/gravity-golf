@@ -37,7 +37,6 @@ public class StrokeController : MonoBehaviour
 
     public void Swing(Vector2 argument)
     {
-        // Start Swing Control
         StartCoroutine(SwingControl(argument));
     }
 

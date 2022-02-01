@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8859127850552339698}
   - component: {fileID: 6928673583977264968}
   - component: {fileID: 8859127850552339709}
+  - component: {fileID: 8824441494831201858}
   m_Layer: 0
   m_Name: Goffbol
   m_TagString: Player
@@ -166,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e162be29867c464582e77ae2e3b95df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistance: 30
 --- !u!114 &8859127850552339709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,5 +180,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f18f59e242a7c4aa96c1661885292b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strokeInitialSpeed: 20
+  strokeInitialSpeedMin: 10
+  strokeInitialSpeedMax: 25
   strokeEndSpeed: 1.21
+--- !u!114 &8824441494831201858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8859127850552339704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0fda1d2ea14d744a8c478b81946796a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numPoints: 100
+  planets: {fileID: 0}
+  goshtbol: {fileID: 8859127850552339704, guid: 85466552ea02ec145823229c64d4bfdb,
+    type: 3}
