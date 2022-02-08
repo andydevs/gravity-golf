@@ -6,8 +6,12 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class SwingController : MonoBehaviour
 {
+    // Public parameters
+    public float minSpeed = 20.0f;
+    public float maxSpeed = 40.0f;
     public float maxDistance = 30.0f;
 
+    // Private variables
     private PlayerInput input;
     private InputAction mouseState;
     private Vector2 downEvent;
@@ -15,9 +19,22 @@ public class SwingController : MonoBehaviour
     private Vector2 argument;
     private bool pressed;
 
-    // Public Properties
-    public bool InSwingControl { get { return pressed; } }
-    public Vector2 SwingArgument { get { return argument; } }
+    /**
+     * True if ball is in swing control 
+     * (meaning someone is engaging the swing)
+     */
+    public bool InSwingControl 
+    { 
+        get { return pressed; } 
+    }
+
+    /**
+     * The current swing speed vector
+     */
+    public Vector2 SwingSpeed
+    {
+        get { return Mathf.Lerp(minSpeed, maxSpeed, argument.magnitude) * argument.normalized; }
+    }
 
     public void Start()
     {
@@ -39,6 +56,16 @@ public class SwingController : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        if (pressed)
+        {
+            Gizmos.color = Color.HSVToRGB(argument.magnitude, 1, 1);
+            Gizmos.DrawLine(downEvent, mousePos);
+            Gizmos.DrawLine(transform.position, transform.position + 3 * (Vector3)argument);
+        }
+    }
+
     private void OnMouseButtonStarted(InputAction.CallbackContext context)
     {
         pressed = true;
@@ -47,18 +74,8 @@ public class SwingController : MonoBehaviour
 
     private void OnMouseButtonCancelled(InputAction.CallbackContext context)
     {
-        SendMessage("Swing", argument);
+        SendMessage("Swing", SwingSpeed);
         pressed = false;
-    }
-
-    public void OnDrawGizmos()
-    {
-        if (pressed)
-        {
-            Gizmos.color = Color.HSVToRGB(argument.magnitude, 1, 1);
-            Gizmos.DrawLine(downEvent, mousePos);
-            Gizmos.DrawLine(transform.position, transform.position + 3 * (Vector3)argument);
-        }
     }
 
     private Vector2 GetMousePos()

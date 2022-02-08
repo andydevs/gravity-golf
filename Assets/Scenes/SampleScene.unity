@@ -271,7 +271,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 100, y: 66.3}
+  m_Size: {x: 127.7, y: 91.3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
@@ -449,12 +449,12 @@ PrefabInstance:
     - target: {fileID: 5344520940805684624, guid: 8fdbee690157a264184aa85a545632ed,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.02
+      value: -34.67
       objectReference: {fileID: 0}
     - target: {fileID: 5344520940805684624, guid: 8fdbee690157a264184aa85a545632ed,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.803
+      value: 5.093
       objectReference: {fileID: 0}
     - target: {fileID: 5344520940805684624, guid: 8fdbee690157a264184aa85a545632ed,
         type: 3}
@@ -520,6 +520,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6928673583977264968, guid: dbb2e1e775158dc4584af383b6757eb1,
+        type: 3}
+      propertyPath: minSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928673583977264968, guid: dbb2e1e775158dc4584af383b6757eb1,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8824441494831201858, guid: dbb2e1e775158dc4584af383b6757eb1,
         type: 3}
       propertyPath: planets
@@ -558,12 +568,12 @@ PrefabInstance:
     - target: {fileID: 8859127850552339710, guid: dbb2e1e775158dc4584af383b6757eb1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.15
+      value: -34.8
       objectReference: {fileID: 0}
     - target: {fileID: 8859127850552339710, guid: dbb2e1e775158dc4584af383b6757eb1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.21
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 8859127850552339710, guid: dbb2e1e775158dc4584af383b6757eb1,
         type: 3}
