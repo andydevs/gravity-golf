@@ -15,10 +15,10 @@ public class StrokeController : MonoBehaviour
     // Components
     private Rigidbody2D rigidbody2D_;
     private Collider2D collider2D_;
-    private PlayerInput playerInput_;
 
     // Helper variables
     private int planetMask;
+    private bool canReceiveSwingCommands;
 
     // Public properties
     public bool IsInStroke { get { return rigidbody2D_.simulated; } }
@@ -26,22 +26,25 @@ public class StrokeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerInput_ = GetComponent<PlayerInput>();
         collider2D_  = GetComponent<Collider2D>();
         rigidbody2D_ = GetComponent<Rigidbody2D>();
         planetMask   = LayerMask.GetMask("Planet");
         rigidbody2D_.simulated = false;
+        canReceiveSwingCommands = true;
     }
 
     public void Swing(Vector2 argument)
     {
-        StartCoroutine(SwingControl(argument));
+        if (canReceiveSwingCommands)
+        {
+            StartCoroutine(SwingControl(argument));
+        }
     }
 
     IEnumerator SwingControl(Vector2 strokeSpeed)
     {
-        // Disable controls
-        playerInput_.enabled = false;
+        // Disable swing command
+        canReceiveSwingCommands = false;
 
         // Start simulation with given initial velocity
         rigidbody2D_.velocity = strokeSpeed;
@@ -62,8 +65,8 @@ public class StrokeController : MonoBehaviour
         // End simulation
         rigidbody2D_.simulated = false;
 
-        // Enable controls
-        playerInput_.enabled = true;
+        // Enable swing command
+        canReceiveSwingCommands = true;
 
         // Stroke event
         OnStroke();

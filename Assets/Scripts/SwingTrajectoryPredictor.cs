@@ -73,8 +73,13 @@ public class SwingTrajectoryPredictor : MonoBehaviour
         if (swing.InSwingControl)
         {
             // Instantiate Goshtbol in sim
-            goffbolSim = Instantiate(gameObject, transform.position, transform.rotation);
-            SceneManager.MoveGameObjectToScene(goffbolSim, simulationScene);
+            goffbolSim = Instantiate(
+                swing.golfball.gameObject, 
+                swing.golfball.transform.position, 
+                swing.golfball.transform.rotation);
+            SceneManager.MoveGameObjectToScene(
+                goffbolSim, 
+                simulationScene);
 
             try
             {

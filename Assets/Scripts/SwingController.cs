@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class SwingController : MonoBehaviour
 {
+    // Public gameobject
+    public GameObject golfball;
+
     // Public parameters
     public float minSpeed = 20.0f;
     public float maxSpeed = 40.0f;
@@ -62,7 +65,6 @@ public class SwingController : MonoBehaviour
         {
             Gizmos.color = Color.HSVToRGB(argument.magnitude, 1, 1);
             Gizmos.DrawLine(downEvent, mousePos);
-            Gizmos.DrawLine(transform.position, transform.position + 3 * (Vector3)argument);
         }
     }
 
@@ -74,7 +76,7 @@ public class SwingController : MonoBehaviour
 
     private void OnMouseButtonCancelled(InputAction.CallbackContext context)
     {
-        SendMessage("Swing", SwingSpeed);
+        golfball.SendMessage("Swing", SwingSpeed);
         pressed = false;
     }
 
