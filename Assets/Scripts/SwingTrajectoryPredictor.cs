@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,12 +7,9 @@ public class SwingTrajectoryPredictor : MonoBehaviour
     // Public variables
     public int numPoints = 100;
     public Transform planets;
-    public GameObject goshtbol;
 
     // Private golf ball variables
-    private Rigidbody2D physics;
     private SwingController swing;
-    private StrokeController stroke;
 
     // Line points array
     private Vector2[] points;
@@ -29,9 +25,7 @@ public class SwingTrajectoryPredictor : MonoBehaviour
     void Start()
     {
         // Get components
-        physics = GetComponent<Rigidbody2D>();
         swing = GetComponent<SwingController>();
-        stroke = GetComponent<StrokeController>();
 
         // Initialize points array
         points = new Vector2[numPoints];
@@ -79,18 +73,19 @@ public class SwingTrajectoryPredictor : MonoBehaviour
         if (swing.InSwingControl)
         {
             // Instantiate Goshtbol in sim
-            goffbolSim = Instantiate(gameObject, transform.position, transform.rotation);
-            SceneManager.MoveGameObjectToScene(goffbolSim, simulationScene);
+            goffbolSim = Instantiate(
+                swing.golfball.gameObject, 
+                swing.golfball.transform.position, 
+                swing.golfball.transform.rotation);
+            SceneManager.MoveGameObjectToScene(
+                goffbolSim, 
+                simulationScene);
 
             try
             {
                 // Set physics of golfball
                 goffbolSimPhysics = goffbolSim.GetComponent<Rigidbody2D>();
-                goffbolSimPhysics.velocity = Mathf.Lerp(
-                    stroke.strokeInitialSpeedMin,
-                    stroke.strokeInitialSpeedMax,
-                    swing.SwingArgument.magnitude
-                ) * swing.SwingArgument.normalized;
+                goffbolSimPhysics.velocity = swing.SwingSpeed;
                 goffbolSimPhysics.simulated = true;
 
                 // Simulation
