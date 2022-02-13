@@ -16,8 +16,6 @@ public class SwingTrajectoryPredictor : MonoBehaviour
 
     // Physics scene
     private SimulationController simu;
-    private GameObject goffbolSim;
-    private Rigidbody2D goffbolSimPhysics;
 
     // Start is called before the first frame update
     void Start()
@@ -36,35 +34,10 @@ public class SwingTrajectoryPredictor : MonoBehaviour
         if (swing.InSwingControl)
         {
             // Instantiate Goshtbol in sim
-            goffbolSim = Instantiate(
-                swing.Golfball,
-                swing.Golfball.transform.position,
-                swing.Golfball.transform.rotation);
-            SceneManager.MoveGameObjectToScene(goffbolSim, simu.SimuScene);
-
-            try
-            {
-                // Set physics of golfball
-                goffbolSimPhysics = goffbolSim.GetComponent<Rigidbody2D>();
-                goffbolSimPhysics.velocity = swing.SwingSpeed;
-                goffbolSimPhysics.simulated = true;
-
-                // Simulation
-                for (int i = 0; i < numPoints; ++i)
-                {
-                    points[i] = goffbolSimPhysics.transform.position;
-                    foreach (Gravitator planet in simu.Planets)
-                    {
-                        goffbolSimPhysics.AddForce(planet.ComputeGravityForce(goffbolSimPhysics));
-                    }
-                    simu.SimuScenePhysics.Simulate(Time.fixedDeltaTime);
-                }
-            }
-            finally
-            {
-                // Destroy GolfBall
-                Destroy(goffbolSim);
-            }
+            simu.SimulateObjectTrajectory(
+                swing.Golfball, 
+                swing.SwingSpeed, 
+                ref points);
         }
     }
 
