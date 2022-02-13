@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class SwingController : MonoBehaviour
 {
-    // Public gameobject
-    public GameObject golfball;
-
     // Public parameters
     public float minSpeed = 20.0f;
     public float maxSpeed = 40.0f;
     public float maxDistance = 30.0f;
+
+    // Our golf ball
+    private GameObject golfball;
 
     // Private variables
     private PlayerInput input;
@@ -32,6 +32,14 @@ public class SwingController : MonoBehaviour
     }
 
     /**
+     * Return reference to golfball
+     */
+    public GameObject Golfball
+    {
+        get { return golfball; }
+    }
+
+    /**
      * The current swing speed vector
      */
     public Vector2 SwingSpeed
@@ -41,6 +49,7 @@ public class SwingController : MonoBehaviour
 
     public void Start()
     {
+        golfball = transform.parent.Find("Goffbol").gameObject;
         input = GetComponent<PlayerInput>();
         downEvent = Vector2.zero;
         pressed = false;

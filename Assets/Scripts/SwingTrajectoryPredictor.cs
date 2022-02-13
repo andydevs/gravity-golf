@@ -15,56 +15,19 @@ public class SwingTrajectoryPredictor : MonoBehaviour
     private Vector2[] points;
 
     // Physics scene
-    private Scene simulationScene;
-    private PhysicsScene2D physicsScene;
+    private SimulationController simu;
     private GameObject goffbolSim;
     private Rigidbody2D goffbolSimPhysics;
-    private Gravitator[] planetSimGs;
 
     // Start is called before the first frame update
     void Start()
     {
         // Get components
         swing = GetComponent<SwingController>();
+        simu = FindObjectOfType<SimulationController>();
 
         // Initialize points array
         points = new Vector2[numPoints];
-
-        // Create physics scene
-        simulationScene = SceneManager.CreateScene("simulation", 
-            new CreateSceneParameters(LocalPhysicsMode.Physics2D));
-        physicsScene = simulationScene.GetPhysicsScene2D();
-
-        // Add planets to scene
-        planetSimGs = new Gravitator[planets.childCount];
-        GameObject planetSim;
-        for (int index = 0; index < planets.childCount; ++index)
-        {
-            Transform planet = planets.GetChild(index);
-            planetSim = Instantiate(planet.gameObject, planet.position, planet.rotation);
-            planetSim.GetComponent<Renderer>().enabled = false;
-            planetSimGs[index] = planetSim.GetComponent<Gravitator>();
-            SceneManager.MoveGameObjectToScene(planetSim, simulationScene);
-        }
-
-        // Run after start
-        StartCoroutine(AfterStart());
-    }
-
-    /**
-     * Update planet references after start so that 
-     * they don't get set after I create new planet 
-     * objects...
-     * 
-     * TODO: There has to be a better way to do this...
-     */
-    IEnumerator AfterStart()
-    {
-        yield return null;
-        foreach (Gravitator planet in planetSimGs)
-        {
-            planet.SetGolfbol(null);
-        }
     }
 
     // Update is called once per frame
@@ -74,12 +37,10 @@ public class SwingTrajectoryPredictor : MonoBehaviour
         {
             // Instantiate Goshtbol in sim
             goffbolSim = Instantiate(
-                swing.golfball.gameObject, 
-                swing.golfball.transform.position, 
-                swing.golfball.transform.rotation);
-            SceneManager.MoveGameObjectToScene(
-                goffbolSim, 
-                simulationScene);
+                swing.Golfball,
+                swing.Golfball.transform.position,
+                swing.Golfball.transform.rotation);
+            SceneManager.MoveGameObjectToScene(goffbolSim, simu.SimuScene);
 
             try
             {
@@ -92,11 +53,11 @@ public class SwingTrajectoryPredictor : MonoBehaviour
                 for (int i = 0; i < numPoints; ++i)
                 {
                     points[i] = goffbolSimPhysics.transform.position;
-                    foreach (Gravitator planetg in planetSimGs)
+                    foreach (Gravitator planet in simu.Planets)
                     {
-                        goffbolSimPhysics.AddForce(planetg.ComputeGravityForce(goffbolSimPhysics));
+                        goffbolSimPhysics.AddForce(planet.ComputeGravityForce(goffbolSimPhysics));
                     }
-                    physicsScene.Simulate(Time.fixedDeltaTime);
+                    simu.SimuScenePhysics.Simulate(Time.fixedDeltaTime);
                 }
             }
             finally
