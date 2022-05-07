@@ -37,38 +37,29 @@ public class StrokeController : MonoBehaviour
     {
         if (canReceiveSwingCommands)
         {
-            StartCoroutine(SwingControl(argument));
+            StartCoroutine(StrokeControl(argument));
         }
     }
 
-    IEnumerator SwingControl(Vector2 strokeSpeed)
+    IEnumerator StrokeControl(Vector2 strokeSpeed)
     {
-        // Disable swing command
-        canReceiveSwingCommands = false;
-
-        // Start simulation with given initial velocity
-        rigidbody2D_.velocity = strokeSpeed;
+        // Begin Stroke
+        Debug.Log("Stroke began!");          // Log beginning of stroke
+        canReceiveSwingCommands = false;     // Disable swing command
+        rigidbody2D_.velocity = strokeSpeed; // Start simulation with given initial velocity
         rigidbody2D_.simulated = true;
 
-        // Wait for ending stroke
-        bool endStroke = false;
-        while (!endStroke)
-        {
-            // Wait for next frame
-            yield return null;
+        // Wait for stroke end condition
+        yield return new WaitUntil(() =>
+               collider2D_.IsTouchingLayers(planetMask)           // Touching planet
+            && rigidbody2D_.velocity.magnitude < strokeEndSpeed); // Slow enough
 
-            // Update end stroke
-            endStroke = collider2D_.IsTouchingLayers(planetMask)         // Touching planet
-                    && rigidbody2D_.velocity.magnitude < strokeEndSpeed; // Slow Enough
-        }
+        // End Stroke
+        rigidbody2D_.simulated = false; // End simulation
+        canReceiveSwingCommands = true; // Enable swing command
+        Debug.Log("Stroke ended!");     // Log End of Stroke
+        OnStroke();                     // Stroke event
 
-        // End simulation
-        rigidbody2D_.simulated = false;
-
-        // Enable swing command
-        canReceiveSwingCommands = true;
-
-        // Stroke event
-        OnStroke();
+        // Have a stroke
     }
 }
