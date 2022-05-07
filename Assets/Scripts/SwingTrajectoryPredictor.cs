@@ -4,9 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class SwingTrajectoryPredictor : MonoBehaviour
 {
-    // Public variables
-    public Transform planets;
-
     // Private golf ball variables
     private SwingController swing;
     private SimulationController simu;
@@ -30,11 +27,11 @@ public class SwingTrajectoryPredictor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (swing.InSwingControl)
-        {
-            // Instantiate Goshtbol in sim
-            simu.SimulateObjectTrajectory(swing.Golfball, swing.SwingSpeed, ref points);
-            tLine.SetPositions(points);
-        }
+        // Update trajectory points
+        if (swing.InSwingControl) simu.SimulateObjectTrajectory(swing.Golfball, swing.SwingSpeed, ref points);
+        else for (int i = 0; i < tLine.positionCount; i++) points[i] = Vector3.zero;
+
+        // Set positions in array
+        tLine.SetPositions(points);
     }
 }
