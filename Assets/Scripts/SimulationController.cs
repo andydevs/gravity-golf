@@ -47,7 +47,7 @@ public class SimulationController : MonoBehaviour
         }
     }
 
-    public void SimulateObjectTrajectory(GameObject gobject, Vector2 initialVelocity, ref Vector2[] points)
+    public void SimulateObjectTrajectory(GameObject gobject, Vector2 initialVelocity, ref Vector3[] points)
     {
         // Create new object and add to scene
         GameObject simObject = Instantiate(
