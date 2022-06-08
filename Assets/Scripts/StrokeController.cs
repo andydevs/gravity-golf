@@ -7,7 +7,7 @@ public class StrokeController : MonoBehaviour
 {
     // Event delegates
     public delegate void StrokeEvent();
-    public static StrokeEvent OnStroke;
+    public StrokeEvent OnStroke;
 
     // Public variables
     public float strokeEndSpeed = 0.05f;
@@ -58,6 +58,6 @@ public class StrokeController : MonoBehaviour
         rigidbody2D_.simulated = false; // End simulation
         canReceiveSwingCommands = true; // Enable swing command
         Debug.Log("Stroke ended!");     // Log End of Stroke
-        OnStroke();                     // Have a stroke
+        OnStroke?.Invoke();             // Have a stroke
     }
 }

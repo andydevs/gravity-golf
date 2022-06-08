@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class HoleController : MonoBehaviour
 {
-    // Event delegates
-    public delegate void HoleEvent(int ball);
-    public static HoleEvent OnHole;
-
     // Helper variables
     private int ballMask;
 
@@ -22,7 +18,8 @@ public class HoleController : MonoBehaviour
         if ((ballMask & 1<<collision.gameObject.layer) != 0)
         {
             Debug.Log("A ball is inside me!");
-            OnHole(0);
+            PlayerController player = collision.gameObject.GetComponentInParent<PlayerController>();
+            player.SendMessage("OnHole");
         }
     }
 }
