@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Helper variables
-    int strokesThisGame;
+    // OnPlayer end delegate
+    public delegate void PlayerEnd(bool didit, int playerId, int strokes);
+    public static PlayerEnd OnPlayerEnd;
 
-    // Handles to child components
-    StrokeController strokec;
-    SwingController swingc;
-    GameObject goffbol;
+    // Player data per hole
+    int playerId;
+    int strokesThisGame;
 
     // Start is called before the first frame update
     void Start()
     {
-        strokec = GetComponentInChildren<StrokeController>();
-        strokec.OnStroke += OnStroke;
+        // Initialize variables
+        playerId = 0;
         strokesThisGame = 0;
-        swingc = GetComponentInChildren<SwingController>();
-        goffbol = transform.Find("Goffbol").gameObject;
+
+        // Listen to OnStroke event from StrokeController
+        GetComponentInChildren<StrokeController>().OnStroke += OnStroke;
     }
 
     void OnStroke()
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     void OnHole()
     {
         Debug.Log("We did it!");
-        swingc.enabled = false;
-        Destroy(goffbol);
+        OnPlayerEnd?.Invoke(true, playerId, strokesThisGame);
+        Destroy(gameObject);
     }
 }
