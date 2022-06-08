@@ -28,7 +28,7 @@ public class StrokeController : MonoBehaviour
     {
         collider2D_  = GetComponent<Collider2D>();
         rigidbody2D_ = GetComponent<Rigidbody2D>();
-        planetMask   = LayerMask.GetMask("Planet");
+        planetMask = LayerMask.GetMask("Planet");
         rigidbody2D_.simulated = false;
         canReceiveSwingCommands = true;
     }
@@ -58,8 +58,6 @@ public class StrokeController : MonoBehaviour
         rigidbody2D_.simulated = false; // End simulation
         canReceiveSwingCommands = true; // Enable swing command
         Debug.Log("Stroke ended!");     // Log End of Stroke
-        OnStroke();                     // Stroke event
-
-        // Have a stroke
+        OnStroke();                     // Have a stroke
     }
 }
