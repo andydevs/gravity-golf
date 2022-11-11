@@ -15,9 +15,6 @@ public class Gravitator : MonoBehaviour
     void Start()
     {
         // Find components
-        golfball = GameObject
-            .FindGameObjectWithTag("Ball")
-            .GetComponent<Rigidbody2D>();
         surface = GetComponent<CircleCollider2D>();
         planet = GetComponent<PlanetPropertyController>();
     }

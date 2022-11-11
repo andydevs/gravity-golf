@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8859127850552339708}
   - component: {fileID: 8859127850552339711}
   - component: {fileID: 8859127850552339709}
-  m_Layer: 0
+  - component: {fileID: 612927620}
+  m_Layer: 10
   m_Name: Goffbol
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8859127850552339704}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.13, y: 4.36, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.11249999, y: 0.11249999, z: 0.11249999}
   m_Children: []
   m_Father: {fileID: 0}
@@ -134,3 +135,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strokeEndSpeed: 2.42
+--- !u!114 &612927620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8859127850552339704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e0f9ee04169c0b4b87657118792f0b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  golfBallPrefab: {fileID: 0}

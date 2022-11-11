@@ -11,10 +11,8 @@ public class SwingController : MonoBehaviour
     public float maxSpeed = 40.0f;
     public float maxDistance = 30.0f;
 
-    // Our golf ball
-    private GameObject golfball;
-
     // Private variables
+    private PlayerController player;
     private PlayerInput input;
     private InputAction mouseState;
     private Vector2 downEvent;
@@ -28,15 +26,15 @@ public class SwingController : MonoBehaviour
      */
     public bool InSwingControl 
     { 
-        get { return pressed; } 
+        get { return player.GolfBall != null && pressed; } 
     }
 
     /**
-     * Return reference to golfball
+     * Return reference to golfBall
      */
-    public GameObject Golfball
+    public GameObject GolfBall
     {
-        get { return golfball; }
+        get { return player.GolfBall; }
     }
 
     /**
@@ -49,7 +47,7 @@ public class SwingController : MonoBehaviour
 
     public void Start()
     {
-        golfball = transform.parent.Find("Goffbol").gameObject;
+        player = GetComponent<PlayerController>();
         input = GetComponent<PlayerInput>();
         downEvent = Vector2.zero;
         pressed = false;
@@ -85,7 +83,10 @@ public class SwingController : MonoBehaviour
 
     private void OnMouseButtonCancelled(InputAction.CallbackContext context)
     {
-        golfball.SendMessage("Swing", SwingSpeed);
+        if (player.GolfBall)
+        {
+            player.GolfBall.SendMessage("Swing", SwingSpeed);
+        }
         pressed = false;
     }
 

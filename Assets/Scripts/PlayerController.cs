@@ -8,6 +8,12 @@ public class PlayerController : MonoBehaviour
     public delegate void PlayerEnd(bool didit, int playerId, int strokes);
     public static PlayerEnd OnPlayerEnd;
 
+    // Game objects
+    public GameObject golfBallPrefab;
+    private GameObject golfBall;
+    private Transform tee;
+    private GameObject planets;
+
     // Player data per hole
     int playerId;
     int strokesThisGame;
@@ -19,8 +25,26 @@ public class PlayerController : MonoBehaviour
         playerId = 0;
         strokesThisGame = 0;
 
-        // Listen to OnStroke event from StrokeController
-        GetComponentInChildren<StrokeController>().OnStroke += OnStroke;
+        // Get tee
+        tee = GameObject.Find("Tee").transform;
+        planets = GameObject.Find("Planets");
+    }
+
+    public GameObject GolfBall
+    {
+        get { return golfBall; }
+    }
+
+    void OnSpawn()
+    {
+        if (!golfBall)
+        {
+            golfBall = Instantiate(golfBallPrefab, tee);
+            foreach (Gravitator grav in planets.GetComponentsInChildren<Gravitator>())
+            {
+                grav.SetGolfbol(golfBall.GetComponent<Rigidbody2D>());
+            }
+        }
     }
 
     void OnStroke()

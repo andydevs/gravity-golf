@@ -15,6 +15,7 @@ public class HoleController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Collision");
         if ((ballMask & 1<<collision.gameObject.layer) != 0)
         {
             Debug.Log("A ball is inside me!");

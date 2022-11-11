@@ -20,6 +20,9 @@ public class UIController : MonoBehaviour
 
         // Subscribe to player end
         PlayerController.OnPlayerEnd += OnGameEnd;
+
+        // Run restart
+        OnRestart();
     }
 
     void OnGameEnd(bool didit, int playerId, int strokes)
@@ -30,6 +33,12 @@ public class UIController : MonoBehaviour
     void OnRestart()
     {
         winUI.SetActive(false);
+
+        // Find all player objects and trigger on spawn
+        foreach (PlayerController player in FindObjectsOfType<PlayerController>())
+        {
+            player.SendMessage("OnSpawn");
+        }
     }
 
     void OnQuit()

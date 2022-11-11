@@ -28,7 +28,7 @@ public class SwingTrajectoryPredictor : MonoBehaviour
     void Update()
     {
         // Update trajectory points
-        if (swing.InSwingControl) simu.SimulateObjectTrajectory(swing.Golfball, swing.SwingSpeed, ref points);
+        if (swing.InSwingControl) simu.SimulateObjectTrajectory(swing.GolfBall, swing.SwingSpeed, ref points);
         else for (int i = 0; i < tLine.positionCount; i++) points[i] = Vector3.zero;
 
         // Set positions in array
