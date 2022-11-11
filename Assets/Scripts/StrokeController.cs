@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class StrokeController : MonoBehaviour
 {
-    // Event delegates
+    // Events
     public delegate void StrokeEvent();
     public StrokeEvent OnStroke;
 

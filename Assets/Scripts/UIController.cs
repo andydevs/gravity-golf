@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
+    // Events
+    public delegate void GameRestart();
+    public static GameRestart OnGameRestart;
+
     // Game UI
     private GameObject winUI;
     private GameObject gameUI;
@@ -33,12 +37,7 @@ public class UIController : MonoBehaviour
     void OnRestart()
     {
         winUI.SetActive(false);
-
-        // Find all player objects and trigger on spawn
-        foreach (PlayerController player in FindObjectsOfType<PlayerController>())
-        {
-            player.SendMessage("OnSpawn");
-        }
+        OnGameRestart?.Invoke();
     }
 
     void OnQuit()

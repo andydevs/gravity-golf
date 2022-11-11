@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // OnPlayer end delegate
+    // Events
     public delegate void PlayerEnd(bool didit, int playerId, int strokes);
     public static PlayerEnd OnPlayerEnd;
 
@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
         // Get tee
         tee = GameObject.Find("Tee").transform;
         planets = GameObject.Find("Planets");
+
+        // Hook into events
+        UIController.OnGameRestart += OnSpawn;
     }
 
     public GameObject GolfBall
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
         if (!golfBall)
         {
             golfBall = Instantiate(golfBallPrefab, tee);
+            golfBall.GetComponent<StrokeController>().OnStroke += OnStroke;
             foreach (Gravitator grav in planets.GetComponentsInChildren<Gravitator>())
             {
                 grav.SetGolfbol(golfBall.GetComponent<Rigidbody2D>());
