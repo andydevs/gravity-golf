@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     // Events
     public delegate void PlayerEnd(bool didit, int playerId, int strokes);
     public static PlayerEnd OnPlayerEnd;
+    public delegate void PlayerStrokeUpdate(int playerId, int strokes);
+    public static PlayerStrokeUpdate OnPlayerStrokeUpdate;
 
     // Game objects
     public GameObject golfBallPrefab;
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
         {
             golfBall = Instantiate(golfBallPrefab, tee);
             golfBall.GetComponent<StrokeController>().OnStroke += OnStroke;
+            golfBall.GetComponent<BallController>().OnBallEnd += OnBallEnd;
             foreach (Gravitator grav in planets.GetComponentsInChildren<Gravitator>())
             {
                 grav.SetGolfbol(golfBall.GetComponent<Rigidbody2D>());
@@ -54,13 +57,11 @@ public class PlayerController : MonoBehaviour
     void OnStroke()
     {
         strokesThisGame++;
-        Debug.Log(strokesThisGame.ToString() + " Strokes This Game");
+        OnPlayerStrokeUpdate?.Invoke(playerId, strokesThisGame);
     }
 
-    void OnHole()
+    void OnBallEnd(bool didit)
     {
-        Debug.Log("We did it!");
-        OnPlayerEnd?.Invoke(true, playerId, strokesThisGame);
-        Destroy(gameObject);
+        OnPlayerEnd?.Invoke(didit, playerId, strokesThisGame);
     }
 }

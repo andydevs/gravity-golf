@@ -19,8 +19,8 @@ public class HoleController : MonoBehaviour
         if ((ballMask & 1<<collision.gameObject.layer) != 0)
         {
             Debug.Log("A ball is inside me!");
-            PlayerController player = collision.gameObject.GetComponentInParent<PlayerController>();
-            player.SendMessage("OnHole");
+            BallController ball = collision.gameObject.GetComponentInParent<BallController>();
+            ball.SendMessage("OnHole");
         }
     }
 }
