@@ -37,7 +37,7 @@ public class UIController : MonoBehaviour
 
         // Run restart
         OnSetPar();
-        OnRestart();
+        OnGameStart();
     }
 
     void OnGameEnd(bool didit, int playerId, int strokes)
@@ -59,6 +59,61 @@ public class UIController : MonoBehaviour
     {
         winUI.SetActive(false);
         OnGameRestart?.Invoke();
+    }
+
+    void OnGameStart()
+    {
+        // Run level show animation routine
+        StartCoroutine(LevelShowAnimation());
+    }
+
+    IEnumerator LevelShowAnimation()
+    {
+        // Params
+        float speed = 5.0f;
+        float tolerance = 0.001f;
+
+        // Show flag and wait (routine)
+        Transform hole = GameObject.FindGameObjectWithTag("Hole").transform;
+        Camera.main.transform.position = new Vector3(
+            hole.position.x,
+            hole.position.y,
+            -10
+        );
+        Camera.main.orthographicSize = 20;
+        yield return new WaitForSeconds(2.0f);
+
+        // Zoom out to level (routine) and wait (routine)
+        Transform levelHook = GameObject.FindGameObjectWithTag("CameraHook").transform;
+        while (
+            Vector3.Distance(Camera.main.transform.position, levelHook.position) > tolerance
+            && Mathf.Abs(Camera.main.orthographicSize - 80.0f) > tolerance
+        )
+        {
+            Camera.main.transform.position = Vector3.Lerp(
+                Camera.main.transform.position,
+                new Vector3(levelHook.position.x, levelHook.position.y, -10),
+                Time.fixedDeltaTime * speed);
+            Camera.main.orthographicSize = Mathf.Lerp(
+                Camera.main.orthographicSize, 80, 
+                Time.fixedDeltaTime * speed);
+            yield return new WaitForFixedUpdate();
+        }
+        yield return new WaitForSeconds(1.0f);
+
+        // Spawn ball and wait (routine)
+        OnGameRestart();
+        while (Mathf.Abs(Camera.main.orthographicSize - 20.0f) > tolerance)
+        {
+            Camera.main.orthographicSize = Mathf.Lerp(
+                Camera.main.orthographicSize, 20.0f,
+                Time.fixedDeltaTime * speed);
+            yield return new WaitForFixedUpdate();
+        }
+        yield return new WaitForSeconds(1.0f);
+
+        // Enable control
+        yield return null;
     }
 
     void OnQuit()
