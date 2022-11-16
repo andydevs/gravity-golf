@@ -8,6 +8,8 @@ public class UIController : MonoBehaviour
     // Events
     public delegate void GameRestart();
     public static GameRestart OnGameRestart;
+    public delegate void EnableControls();
+    public static EnableControls OnEnableControls;
 
     // Set par
     public int par = 3;
@@ -110,10 +112,10 @@ public class UIController : MonoBehaviour
                 Time.fixedDeltaTime * speed);
             yield return new WaitForFixedUpdate();
         }
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
 
         // Enable control
-        yield return null;
+        OnEnableControls?.Invoke();
     }
 
     void OnQuit()

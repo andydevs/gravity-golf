@@ -30,6 +30,11 @@ public class StrokeController : MonoBehaviour
         rigidbody2D_ = GetComponent<Rigidbody2D>();
         planetMask = LayerMask.GetMask("Planet");
         rigidbody2D_.simulated = false;
+        canReceiveSwingCommands = false;
+    }
+
+    public void EnableControls()
+    {
         canReceiveSwingCommands = true;
     }
 

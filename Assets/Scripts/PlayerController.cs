@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     // Player data per hole
     int playerId;
     int strokesThisGame;
+    bool controlsEnabled;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         // Initialize variables
         playerId = 0;
         strokesThisGame = 0;
+        controlsEnabled = false;
 
         // Get tee
         tee = GameObject.Find("Tee").transform;
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
         // Hook into events
         UIController.OnGameRestart += OnSpawn;
+        UIController.OnEnableControls += OnEnableControls;
     }
 
     public GameObject GolfBall
@@ -51,6 +54,10 @@ public class PlayerController : MonoBehaviour
             {
                 grav.SetGolfbol(golfBall.GetComponent<Rigidbody2D>());
             }
+            if (controlsEnabled)
+            {
+                golfBall.SendMessage("EnableControls");
+            }
         }
     }
 
@@ -63,5 +70,13 @@ public class PlayerController : MonoBehaviour
     void OnBallEnd(bool didit)
     {
         OnPlayerEnd?.Invoke(didit, playerId, strokesThisGame);
+    }
+
+    void OnEnableControls()
+    {
+        if (golfBall)
+        {
+            golfBall.SendMessage("EnableControls");
+        }
     }
 }
