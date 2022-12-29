@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class UIController : MonoBehaviour
@@ -13,6 +14,7 @@ public class UIController : MonoBehaviour
 
     // Set par
     public int par = 3;
+    public string next = "Level2";
 
     // Game UI
     private GameObject winUI;
@@ -42,6 +44,12 @@ public class UIController : MonoBehaviour
         OnGameStart();
     }
 
+    void OnDestroy()
+    {
+        PlayerController.OnPlayerEnd -= OnGameEnd;
+        PlayerController.OnPlayerStrokeUpdate -= OnPlayerStrokeUpdate;
+    }
+
     void OnGameEnd(bool didit, int playerId, int strokes)
     {
         winUI.SetActive(true);
@@ -55,6 +63,11 @@ public class UIController : MonoBehaviour
     void OnSetPar()
     {
         parNumberUI.GetComponent<TextMeshProUGUI>().text = "Par: " + par;
+    }
+
+    void OnNext()
+    {
+        SceneManager.LoadScene(next);
     }
 
     void OnRestart()

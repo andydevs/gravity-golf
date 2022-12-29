@@ -37,6 +37,12 @@ public class PlayerController : MonoBehaviour
         UIController.OnGameRestart += OnSpawn;
         UIController.OnEnableControls += OnEnableControls;
     }
+    
+    void OnDestroy()
+    {
+        UIController.OnGameRestart -= OnSpawn;
+        UIController.OnEnableControls -= OnEnableControls;
+    }
 
     public GameObject GolfBall
     {
