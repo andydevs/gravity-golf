@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour
 
     // Set par
     public int par = 3;
-    public string next = "Level2";
+    public string next = "Level 2";
 
     // Game UI
     private GameObject winUI;
@@ -28,8 +28,8 @@ public class UIController : MonoBehaviour
         // Get components
         winUI = transform.Find("Win Screen").gameObject;
         gameUI = transform.Find("In Game Screen").gameObject;
-        strokeNumberUI = gameUI.transform.Find("Stroke Number").gameObject;
-        parNumberUI = gameUI.transform.Find("Par Number").gameObject;
+        strokeNumberUI = gameUI.transform.Find("Data/Stroke Number").gameObject;
+        parNumberUI = gameUI.transform.Find("Data/Par Number").gameObject;
 
         // Make sure initial state is set
         winUI.SetActive(false);
