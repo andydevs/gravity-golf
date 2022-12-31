@@ -25,6 +25,14 @@ public class @GolfControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff8fcfb5-8b22-4af4-9350-988234940500"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -36,6 +44,17 @@ public class @GolfControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Mouse&Keyboard"",
                     ""action"": ""MouseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bc3d9ea-4276-43ae-963c-87aa67a416d5"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse&Keyboard"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -64,6 +83,7 @@ public class @GolfControls : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_MouseButton = m_Player.FindAction("MouseButton", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -114,11 +134,13 @@ public class @GolfControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_MouseButton;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @GolfControls m_Wrapper;
         public PlayerActions(@GolfControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseButton => m_Wrapper.m_Player_MouseButton;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -131,6 +153,9 @@ public class @GolfControls : IInputActionCollection, IDisposable
                 @MouseButton.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseButton;
                 @MouseButton.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseButton;
                 @MouseButton.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseButton;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -138,6 +163,9 @@ public class @GolfControls : IInputActionCollection, IDisposable
                 @MouseButton.started += instance.OnMouseButton;
                 @MouseButton.performed += instance.OnMouseButton;
                 @MouseButton.canceled += instance.OnMouseButton;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -154,5 +182,6 @@ public class @GolfControls : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMouseButton(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

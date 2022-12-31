@@ -12,13 +12,15 @@ public class UIController : MonoBehaviour
     public delegate void EnableControls();
     public static EnableControls OnEnableControls;
 
-    // Set par
+    // Set params
     public int par = 3;
     public string next = "Level 2";
+    public string mainMenu = "Main Menu";
 
     // Game UI
     private GameObject winUI;
     private GameObject gameUI;
+    private GameObject pauseUI;
     private GameObject strokeNumberUI;
     private GameObject parNumberUI;
 
@@ -28,16 +30,19 @@ public class UIController : MonoBehaviour
         // Get components
         winUI = transform.Find("Win Screen").gameObject;
         gameUI = transform.Find("In Game Screen").gameObject;
+        pauseUI = transform.Find("Pause Screen").gameObject;
         strokeNumberUI = gameUI.transform.Find("Data/Stroke Number").gameObject;
         parNumberUI = gameUI.transform.Find("Data/Par Number").gameObject;
 
         // Make sure initial state is set
         winUI.SetActive(false);
+        pauseUI.SetActive(false);
         gameUI.SetActive(true);
 
-        // Subscribe to player end
+        // Subscribe to player events
         PlayerController.OnPlayerEnd += OnGameEnd;
         PlayerController.OnPlayerStrokeUpdate += OnPlayerStrokeUpdate;
+        PlayerController.OnPlayerPause += OnPause;
 
         // Run restart
         OnSetPar();
@@ -48,6 +53,7 @@ public class UIController : MonoBehaviour
     {
         PlayerController.OnPlayerEnd -= OnGameEnd;
         PlayerController.OnPlayerStrokeUpdate -= OnPlayerStrokeUpdate;
+        PlayerController.OnPlayerPause -= OnPause;
     }
 
     void OnGameEnd(bool didit, int playerId, int strokes)
@@ -65,6 +71,23 @@ public class UIController : MonoBehaviour
         parNumberUI.GetComponent<TextMeshProUGUI>().text = "Par: " + par;
     }
 
+    void OnPause()
+    {
+        Time.timeScale = 0.0f;
+        pauseUI.SetActive(true);
+    }
+
+    void OnResume()
+    {
+        Time.timeScale = 1.0f;
+        pauseUI.SetActive(false);
+    }
+
+    bool IsPaused()
+    {
+        return Time.timeScale < 0.5f;
+    }
+
     void OnNext()
     {
         SceneManager.LoadScene(next);
@@ -74,6 +97,11 @@ public class UIController : MonoBehaviour
     {
         winUI.SetActive(false);
         OnGameRestart?.Invoke();
+    }
+
+    void OnGoToStartMenu()
+    {
+        SceneManager.LoadScene(mainMenu);
     }
 
     void OnGameStart()

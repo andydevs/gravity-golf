@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public static PlayerEnd OnPlayerEnd;
     public delegate void PlayerStrokeUpdate(int playerId, int strokes);
     public static PlayerStrokeUpdate OnPlayerStrokeUpdate;
+    public delegate void PlayerPauseAction();
+    public static PlayerPauseAction OnPlayerPause;
 
     // Game objects
     public GameObject golfBallPrefab;
@@ -47,6 +49,11 @@ public class PlayerController : MonoBehaviour
     public GameObject GolfBall
     {
         get { return golfBall; }
+    }
+
+    void OnPause()
+    {
+        OnPlayerPause?.Invoke();
     }
 
     void OnSpawn()
