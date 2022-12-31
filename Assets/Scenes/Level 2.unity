@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   par: 3
-  next: Main Menu
+  next: End Screen
 --- !u!1 &1296749480
 GameObject:
   m_ObjectHideFlags: 0
