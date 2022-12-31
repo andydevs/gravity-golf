@@ -101,11 +101,15 @@ public class UIController : MonoBehaviour
 
     void OnGoToStartMenu()
     {
+        StopAllCoroutines();
         SceneManager.LoadScene(mainMenu);
     }
 
     void OnGameStart()
     {
+        // Reset time scale
+        Time.timeScale = 1.0f;
+
         // Run level show animation routine
         StartCoroutine(LevelShowAnimation());
     }
