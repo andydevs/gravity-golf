@@ -19,6 +19,7 @@ public class UIController : MonoBehaviour
 
     // Game UI
     private GameObject winUI;
+    private GameObject winUIStrokes;
     private GameObject gameUI;
     private GameObject pauseUI;
     private GameObject strokeNumberUI;
@@ -29,6 +30,7 @@ public class UIController : MonoBehaviour
     {
         // Get components
         winUI = transform.Find("Win Screen").gameObject;
+        winUIStrokes = transform.Find("Win Screen/Title").gameObject;
         gameUI = transform.Find("In Game Screen").gameObject;
         pauseUI = transform.Find("Pause Screen").gameObject;
         strokeNumberUI = gameUI.transform.Find("Data/Stroke Number").gameObject;
@@ -59,6 +61,27 @@ public class UIController : MonoBehaviour
     void OnGameEnd(bool didit, int playerId, int strokes)
     {
         winUI.SetActive(true);
+        TextMeshProUGUI strokesTextComponent = winUIStrokes.GetComponent<TextMeshProUGUI>();
+        if (strokes == 1)
+        {
+            strokesTextComponent.text = "Hole in One!";
+        }
+        else if (strokes - par < -1)
+        {
+            strokesTextComponent.text = "Eagle!";
+        }
+        else if (strokes - par == -1)
+        {
+            strokesTextComponent.text = "Birdie!";
+        }
+        else if (strokes == par)
+        {
+            strokesTextComponent.text = "Par!";
+        }
+        else
+        {
+            strokesTextComponent.text = "Bogey!";
+        }
     }
 
     void OnPlayerStrokeUpdate(int playerId, int strokes)
